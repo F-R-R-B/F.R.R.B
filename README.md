@@ -1,6 +1,7 @@
 # F.R.R.B
 
 - [Pitch](Pitch.md)
+- [Requirments](requirments.md)
 
 
 # Team Agreement
