@@ -1,4 +1,4 @@
-# Super Vacation Planner
+# Vacationation/ VEE-Z
 
 ## What is the vision of this product?
 
@@ -27,17 +27,17 @@
 
 ## MVP
 
-Website made react bootstrap and tailwind that displays a map based on user search and finds flight info based on a range of dates. Presents user with cheapest option. Ability to save trip info.
+Website made with react, bootstrap, and tailwind that displays a map based on user search and finds flight info based on an input month. Presents user with cheapest option. Ability to save trip info.
 
 ## Stretch Goals
 
-Display extra map data- events, movies, businesses
-Cost calc & trip cost compare
-Random trip, by dates only
-Random trip, Budget
-Number of guests?
-Ads?
-Make it pretty.
+- Display extra map data- events, movies, businesses
+- Cost calc & trip cost compare
+- Random trip, by dates only
+- Random trip, Budget
+- Number of guests?
+- Ads?
+- Make it pretty.
 
 ## Functionality Req
 
