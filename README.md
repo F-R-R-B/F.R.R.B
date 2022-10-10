@@ -2,7 +2,7 @@
 
 - [Pitch](Pitch.md)
 - [Requirments](requirments.md)
-- [User Stories](Model-stories.md)
+- [User Stories](Models-stories.md)
 
 
 # Team Agreement
