@@ -1,7 +1,7 @@
 # F.R.R.B
 
 - [Pitch](Pitch.md)
-- [Requirments](requirments.md)
+- [Requirements](requirements.md)
 - [User Stories](Models-Stories.md)
 
 
