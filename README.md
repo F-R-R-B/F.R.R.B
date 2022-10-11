@@ -24,8 +24,8 @@ How can you best utilize these strengths in the execution of your project?
 
 
 - Julian- Work on logic-heavy components, data handling and manipulating. But volunteered to do front end.
-- Ian- Server setup and maintenence.
-- Mathieu- Flexible, but no design work. (but still can do it; tough)
+- Ian- Server setup and maintenence. Design driven assistance
+- Mathieu- Flexible, but no design work. (but still can do it; though)
 - Joe- Team lead, debugger, front ender
 
 

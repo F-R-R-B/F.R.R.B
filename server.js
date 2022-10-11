@@ -23,6 +23,7 @@ app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 // modules
 const getWeather = require('./modules/weather.js');
+const flight = require('./modules/flight.js');
 
 
 // Endpoints
