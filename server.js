@@ -20,6 +20,10 @@ db.once('open', function () {
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
+app.get('/', (req, res) => {
+    res.status(200).send('Welcome!');
+  });
+
 
 // modules
 const getWeather = require('./modules/weather.js');
@@ -30,3 +34,13 @@ const flight = require('./modules/flight.js');
 app.get('/weather', getWeather);
 
 
+app.get('*', (req, res) => {
+    res.status(404).send('Not Found');
+  });
+  
+  
+  app.use((error, req, res) => {
+    res.status(500).send(error.message);
+  });
+
+  
