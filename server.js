@@ -40,12 +40,12 @@ try {
     const origin = await getIATA(req.query.originlat, req.query.originlon);
     const destination = await getIATA(req.query.destinationlat, req.query.destinationlon);
     const flightResponse = await axios.get(`https://api.flightapi.io/roundtrip/${process.env.FLIGHT_API_KEY}/${origin}/${destination}/${departureDate}/${returnDate}/1/0/1/Economy/USD`);
-    console.log("🚀 ~ file: server.js ~ line 44 ~ getFlights ~ flightResponse", flightResponse);
+    // console.log("🚀 ~ file: server.js ~ line 44 ~ getFlights ~ flightResponse", flightResponse);
     // console.log("🚀 ~ file: server.js ~ line 45 ~ getFlights ~ t", t);
     
     const data = flightResponse.data;
     const flights = data.trips;
-    console.log("🚀 ~ file: server.js ~ line 49 ~ getFlights ~ flights", flights);
+    // console.log("🚀 ~ file: server.js ~ line 49 ~ getFlights ~ flights", flights);
     
     const legs = data.legs;
     const fares = data.fares;
@@ -70,7 +70,7 @@ try {
             }, 
             price: fares.find(fare => fare.tripId === el.id).price.totalAmount
         });
-        console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
+        // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
         return newTrip;
     } );
     console.log("🚀 ~ file: server.js ~ line 76 ~ results ~ results", results);
