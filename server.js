@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const verifyUser = require('./auth/authorize');
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,8 @@ db.on('error', console.error.bind(console, 'mongo connection error'));
 db.once('open', function () {
     console.log('Mongoose is connected to mongoose');
 });
+
+app.use(verifyUser);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
