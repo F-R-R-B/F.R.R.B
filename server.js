@@ -90,8 +90,10 @@ try {
 async function getIATA(lat, lon) {
     try {
         const response = await axios.get(`https://aerodatabox.p.rapidapi.com/airports/search/location/${lat}/${lon}/km/250/10`, { headers: { 'X-RapidAPI-Key': 'd7df4632d9msh2637409866551b8p15f802jsn7cfad09a091c'} } );
-        const data = response.data.items[0].iata;
-        return data;
+        const items = response.data.items
+        console.log("🚀 ~ file: server.js ~ line 94 ~ getIATA ~ items", items);
+        const iata = items.iata[0];
+        return iata;
     } catch (error) {
         console.log(error.message, 'from getIATA');
     }
