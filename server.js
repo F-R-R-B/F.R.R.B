@@ -90,16 +90,43 @@ try {
 async function getIATA(lat, lon) {
     try {
         const response = await axios.get(`https://aerodatabox.p.rapidapi.com/airports/search/location/${lat}/${lon}/km/250/10`, { headers: { 'X-RapidAPI-Key': 'd7df4632d9msh2637409866551b8p15f802jsn7cfad09a091c'} } );
-        const data = response.data.items[0].iata;
-        return data;
+        const items = response.data.items
+        console.log("🚀 ~ file: server.js ~ line 94 ~ getIATA ~ items", items);
+        const iata = items[0].iata;
+        return iata;
     } catch (error) {
         console.log(error.message, 'from getIATA');
     }
 }
 
+
+// 103-115 DataBase
+
+async function postSaved(req, res, next) {
+    console.log(req.body);
+    try {
+      const newflight = await flight.create(req.body);
+      res.status(200).send(newflight);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async function getSaved(req, res, next) {
+    try {
+        const flights = await flight.find();
+        res.status(200).send(flights);
+    } catch (error) {
+    next(error);
+  }
+}
+
+
 // Endpoints
 app.get('/weather', getWeather);
 app.get('/flights', getFlights);
+app.post('/saved', postSaved);
+app.get('/saved', getSaved);
 
 
 app.get('*', (req, res) => {
