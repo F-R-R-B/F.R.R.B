@@ -73,9 +73,9 @@ try {
         // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
         return newTrip;
     } );
-    console.log("🚀 ~ file: server.js ~ line 76 ~ results ~ results", results);
+    // console.log("🚀 ~ file: server.js ~ line 76 ~ results ~ results", results);
     const sortedResults = results.sort((a,b) => a.price - b.price);
-    console.log("🚀 ~ file: server.js ~ line 78 ~ getFlights ~ sortedResults", sortedResults);
+    // console.log("🚀 ~ file: server.js ~ line 78 ~ getFlights ~ sortedResults", sortedResults);
     const sliced = sortedResults.slice(0,5);
     console.log("🚀 ~ file: server.js ~ line 80 ~ getFlights ~ sliced", sliced);
 
