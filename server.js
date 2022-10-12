@@ -46,6 +46,7 @@ try {
     
     const data = flightResponse.data;
     const flights = data.trips;
+    console.log("🚀 ~ file: server.js ~ line 49 ~ getFlights ~ flights", flights);
     
     const legs = data.legs;
     const fares = data.fares;
@@ -70,7 +71,7 @@ try {
             }, 
             price: fares.find(fare => fare.tripId === el.id).price.totalAmount
         });
-        // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
+        console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
         return newTrip;
     } );
     console.log("🚀 ~ file: server.js ~ line 76 ~ results ~ results", results);
