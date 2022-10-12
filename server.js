@@ -35,59 +35,59 @@ const axios = require('axios');
 
 async function getFlights(req, res) {
     const axios = require('axios');
-try {
-    const departureDate = req.query.departureDate;
-    const returnDate = req.query.returnDate;
-    //  const originCoords = (req.query.lat, req.query.lon);
-    //  const destinationCoords = (req.query.lat, req.query.lon);
-    const origin = await getIATA(req.query.originlat, req.query.originlon);
-    const destination = await getIATA(req.query.destinationlat, req.query.destinationlon);
-    const flightResponse = await axios.get(`https://api.flightapi.io/roundtrip/${process.env.FLIGHT_API_KEY}/${origin}/${destination}/${departureDate}/${returnDate}/1/0/1/Economy/USD`);
-    // console.log("🚀 ~ file: server.js ~ line 44 ~ getFlights ~ flightResponse", flightResponse);
-    // console.log("🚀 ~ file: server.js ~ line 45 ~ getFlights ~ t", t);
-    
-    const data = flightResponse.data;
-    const flights = data.trips;
-    // console.log("🚀 ~ file: server.js ~ line 49 ~ getFlights ~ flights", flights);
-    
-    const legs = data.legs;
-    const fares = data.fares;
-    const airlines = data.airlines;
-    const results = flights.map(el => {
-        const dLeg = legs.find(leg => leg.id === el.legIds[0]);
-        const aLeg = legs.find(leg => leg.id === el.legIds[1]);
+    try {
+        const departureDate = req.query.departureDate;
+        const returnDate = req.query.returnDate;
+        //  const originCoords = (req.query.lat, req.query.lon);
+        //  const destinationCoords = (req.query.lat, req.query.lon);
+        const origin = await getIATA(req.query.originlat, req.query.originlon);
+        const destination = await getIATA(req.query.destinationlat, req.query.destinationlon);
+        const flightResponse = await axios.get(`https://api.flightapi.io/roundtrip/${process.env.FLIGHT_API_KEY}/${origin}/${destination}/${departureDate}/${returnDate}/1/0/1/Economy/USD`);
+        // console.log("🚀 ~ file: server.js ~ line 44 ~ getFlights ~ flightResponse", flightResponse);
+        // console.log("🚀 ~ file: server.js ~ line 45 ~ getFlights ~ t", t);
+        
+        const data = flightResponse.data;
+        const flights = data.trips;
+        // console.log("🚀 ~ file: server.js ~ line 49 ~ getFlights ~ flights", flights);
+        
+        const legs = data.legs;
+        const fares = data.fares;
+        const airlines = data.airlines;
+        const results = flights.map(el => {
+            const dLeg = legs.find(leg => leg.id === el.legIds[0]);
+            const aLeg = legs.find(leg => leg.id === el.legIds[1]);
 
-        const newTrip = ({
-            id: el.id, 
-            departure: {
-            date: dLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
-            stops: dLeg.stopoversCount,
-            overnight: dLeg.overnight,
-            airline: airlines.find(airline => airline.code === dLeg.airlineCodes[0]).name
-            }, 
-            arrival: {
-            date: aLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
-            stops: aLeg.stopoversCount,
-            overnight: aLeg.overnight,
-            airline: airlines.find(airline => airline.code === aLeg.airlineCodes[0]).name
-            }, 
-            price: fares.find(fare => fare.tripId === el.id).price.totalAmount
-        });
-        // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
-        return newTrip;
-    } );
-    // console.log("🚀 ~ file: server.js ~ line 76 ~ results ~ results", results);
-    const sortedResults = results.sort((a,b) => a.price - b.price);
-    // console.log("🚀 ~ file: server.js ~ line 78 ~ getFlights ~ sortedResults", sortedResults);
-    const sliced = sortedResults.slice(0,5);
-    console.log("🚀 ~ file: server.js ~ line 80 ~ getFlights ~ sliced", sliced);
+            const newTrip = ({
+                id: el.id, 
+                departure: {
+                date: dLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
+                stops: dLeg.stopoversCount,
+                overnight: dLeg.overnight,
+                airline: airlines.find(airline => airline.code === dLeg.airlineCodes[0]).name
+                }, 
+                arrival: {
+                date: aLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
+                stops: aLeg.stopoversCount,
+                overnight: aLeg.overnight,
+                airline: airlines.find(airline => airline.code === aLeg.airlineCodes[0]).name
+                }, 
+                price: fares.find(fare => fare.tripId === el.id).price.totalAmount
+            });
+            // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
+            return newTrip;
+        } );
+        // console.log("🚀 ~ file: server.js ~ line 76 ~ results ~ results", results);
+        const sortedResults = results.sort((a,b) => a.price - b.price);
+        // console.log("🚀 ~ file: server.js ~ line 78 ~ getFlights ~ sortedResults", sortedResults);
+        const sliced = sortedResults.slice(0,5);
+        console.log("🚀 ~ file: server.js ~ line 80 ~ getFlights ~ sliced", sliced);
 
-    console.log('SUCCESS??');
-    res.status(200).send(sliced);
+        console.log('SUCCESS??');
+        res.status(200).send(sliced);
 
-} catch (error) {
-    console.log(error.message, 'from getFlights');
-}
+    } catch (error) {
+        console.log(error.message, 'from getFlights');
+    }
 }
 
 async function getIATA(lat, lon) {
