@@ -92,10 +92,11 @@ async function getFlights(req, res) {
 
 async function getIATA(lat, lon) {
     try {
-        const response = await axios.get(`https://aerodatabox.p.rapidapi.com/airports/search/location/${lat}/${lon}/km/250/10`, { headers: { 'X-RapidAPI-Key': 'd7df4632d9msh2637409866551b8p15f802jsn7cfad09a091c'} } );
-        const items = response.data.items
+        const response = await axios.get(`https://airlabs.co/api/v9/nearby?lat=${lat}&lng=${lon}&distance=20&api_key=${process.env.AIRLABS_API_KEY}`);
+        console.log(response);
+        const items = response.data.response.airports;
         console.log("🚀 ~ file: server.js ~ line 94 ~ getIATA ~ items", items);
-        const iata = items[0].iata;
+        const iata = items.sort((a,b) => b.popularity - a.popularity)[0].iata_code;
         return iata;
     } catch (error) {
         console.log(error.message, 'from getIATA');
