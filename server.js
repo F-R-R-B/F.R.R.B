@@ -39,39 +39,49 @@ try {
     //  const destinationCoords = (req.query.lat, req.query.lon);
     const origin = await getIATA(req.query.originlat, req.query.originlon);
     const destination = await getIATA(req.query.destinationlat, req.query.destinationlon);
+    const start = Date.now();
     const flightResponse = await axios.get(`https://api.flightapi.io/roundtrip/${process.env.FLIGHT_API_KEY}/${origin}/${destination}/${departureDate}/${returnDate}/1/0/1/Economy/USD`);
+    const t = Date.now() - start;
+    console.log("🚀 ~ file: server.js ~ line 45 ~ getFlights ~ t", t);
+    
     const data = flightResponse.data;
       const flights = data.trips;
       
       const legs = data.legs;
       const fares = data.fares;
+      const airlines = data.airlines;
       const results = flights.map(el => {
+        const dLeg = legs.find(leg => leg.id === el.legIds[0]);
+        const aLeg = legs.find(leg => leg.id === el.legIds[1]);
+
         const newTrip = ({
           id: el.id, 
-          departure: legs.find(leg => leg.id === el.legIds[0]).departureDateTime, 
-          arrival: legs.find(leg => leg.id === el.legIds[1]).arrivalDateTime, 
+          departure: {
+            date: dLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
+            stops: dLeg.stopoversCount,
+            overnight: dLeg.overnight,
+            airline: airlines.find(airline => airline.code === dLeg.airlineCodes[0]).name
+          }, 
+          arrival: {
+            date: aLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
+            stops: aLeg.stopoversCount,
+            overnight: aLeg.overnight,
+            airline: airlines.find(airline => airline.code === aLeg.airlineCodes[0]).name
+          }, 
           price: fares.find(fare => fare.tripId === el.id).price.totalAmount
         });
         // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
         return newTrip;
-      } );
+      } )
+        .sort((a,b) => a.price - b.price)
+        .slice(0,5);
+      
     res.status(200).send(results);
 
 } catch (error) {
     console.log(error.message, 'from getFlights');
 }
 }
-
-// async function getLocation(city) {
-//     const axios = require('axios');
-//     try {
-//         const response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.LOCATIONIQ_KEY}&q=${city}&format=json`);
-//         const data = response.data[0];
-//         return data;
-//     } catch (error) {
-//         console.log(error.message, 'from getLocation');
-//     }
-// }
 
 async function getIATA(lat, lon) {
     try {
@@ -82,12 +92,6 @@ async function getIATA(lat, lon) {
         console.log(error.message, 'from getIATA');
     }
 }
-
-
-
-
-
-
 
 // Endpoints
 app.get('/weather', getWeather);
