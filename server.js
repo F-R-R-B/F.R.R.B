@@ -115,11 +115,21 @@ async function postSaved(req, res, next) {
     }
   }
 
+  async function getSaved(req, res, next) {
+    try {
+        const flights = await flight.find();
+        res.status(200).send(flights);
+    } catch (error) {
+    next(error);
+  }
+}
+
 
 // Endpoints
 app.get('/weather', getWeather);
 app.get('/flights', getFlights);
 app.post('/saved', postSaved);
+app.get('/saved', getSaved);
 
 
 app.get('*', (req, res) => {
