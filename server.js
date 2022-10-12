@@ -102,9 +102,24 @@ async function getIATA(lat, lon) {
     }
 }
 
+
+// 103-115 DataBase
+
+async function postSaved(req, res, next) {
+    console.log(req.body);
+    try {
+      const newflight = await flight.create(req.body);
+      res.status(200).send(newflight);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
 // Endpoints
 app.get('/weather', getWeather);
 app.get('/flights', getFlights);
+app.post('/saved', postSaved);
 
 
 app.get('*', (req, res) => {
