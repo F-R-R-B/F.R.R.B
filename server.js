@@ -39,10 +39,9 @@ try {
     //  const destinationCoords = (req.query.lat, req.query.lon);
     const origin = await getIATA(req.query.originlat, req.query.originlon);
     const destination = await getIATA(req.query.destinationlat, req.query.destinationlon);
-    const start = Date.now();
     const flightResponse = await axios.get(`https://api.flightapi.io/roundtrip/${process.env.FLIGHT_API_KEY}/${origin}/${destination}/${departureDate}/${returnDate}/1/0/1/Economy/USD`);
-    const t = Date.now() - start;
-    console.log("🚀 ~ file: server.js ~ line 45 ~ getFlights ~ t", t);
+    console.log("🚀 ~ file: server.js ~ line 44 ~ getFlights ~ flightResponse", flightResponse);
+    // console.log("🚀 ~ file: server.js ~ line 45 ~ getFlights ~ t", t);
     
     const data = flightResponse.data;
     const flights = data.trips;
