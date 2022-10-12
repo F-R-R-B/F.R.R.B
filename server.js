@@ -17,7 +17,7 @@ db.once('open', function () {
     console.log('Mongoose is connected to mongoose');
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 app.get('/', (req, res) => {
@@ -55,7 +55,7 @@ try {
         // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
         return newTrip;
       } );
-    res.status(200).send(flights);
+    res.status(200).send(results);
 
 } catch (error) {
     console.log(error.message, 'from getFlights');
@@ -75,7 +75,7 @@ try {
 
 async function getIATA(lat, lon) {
     try {
-        const response = await axios.get(`https://aerodatabox.p.rapidapi.com/airports/search/location/${lat}/${lon}/km/250/10`);
+        const response = await axios.get(`https://aerodatabox.p.rapidapi.com/airports/search/location/${lat}/${lon}/km/250/10`, { headers: { 'X-RapidAPI-Key': d7df4632d9msh2637409866551b8p15f802jsn7cfad09a091c} } );
         const data = response.data.items[0].iata;
         return data;
     } catch (error) {
