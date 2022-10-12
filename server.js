@@ -17,7 +17,7 @@ db.once('open', function () {
     console.log('Mongoose is connected to mongoose');
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 app.get('/', (req, res) => {
@@ -55,7 +55,7 @@ try {
         // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
         return newTrip;
       } );
-    res.status(200).send(flights);
+    res.status(200).send(results);
 
 } catch (error) {
     console.log(error.message, 'from getFlights');
