@@ -124,7 +124,7 @@ async function postSaved(req, res, next) {
 
 async function getSaved(req, res, next) {
     try {
-        const flights = await flight.find();
+        const flights = await flight.find( {user: req.user.email} );
         res.status(200).send(flights);
     } catch (error) {
     next(error);
