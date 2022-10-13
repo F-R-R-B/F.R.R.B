@@ -82,7 +82,7 @@ async function getFlights(req, res) {
         const sliced = sortedResults.slice(0,5);
         console.log("🚀 ~ file: server.js ~ line 80 ~ getFlights ~ sliced", sliced);
 
-        console.log('SUCCESS??');
+        // console.log('SUCCESS??');
         res.status(200).send(sliced);
 
     } catch (error) {
@@ -93,9 +93,9 @@ async function getFlights(req, res) {
 async function getIATA(lat, lon) {
     try {
         const response = await axios.get(`https://airlabs.co/api/v9/nearby?lat=${lat}&lng=${lon}&distance=20&api_key=${process.env.AIRLABS_API_KEY}`);
-        console.log(response);
+        // console.log(response);
         const items = response.data.response.airports;
-        console.log("🚀 ~ file: server.js ~ line 94 ~ getIATA ~ items", items);
+        // console.log("🚀 ~ file: server.js ~ line 94 ~ getIATA ~ items", items);
         const iata = items.sort((a,b) => b.popularity - a.popularity)[0].iata_code;
         return iata;
     } catch (error) {
@@ -107,7 +107,7 @@ async function getIATA(lat, lon) {
 // 103-115 DataBase
 
 async function postSaved(req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     try {
       const newflight = await flight.create(req.body);
       res.status(200).send(newflight);
