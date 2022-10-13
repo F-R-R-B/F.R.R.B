@@ -55,22 +55,28 @@ async function getFlights(req, res) {
         const airlines = data.airlines;
         const results = flights.map(el => {
             const dLeg = legs.find(leg => leg.id === el.legIds[0]);
-            const aLeg = legs.find(leg => leg.id === el.legIds[1]);
-
+            const rLeg = legs.find(leg => leg.id === el.legIds[1]);
+            const dateFormat = (dateString) => new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', weekday: 'short', day: 'numeric'}).format(new Date(dateString));
             const newTrip = ({
                 id: el.id, 
                 departure: {
-                date: dLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
-                stops: dLeg.stopoversCount,
-                overnight: dLeg.overnight,
-                airline: airlines.find(airline => airline.code === dLeg.airlineCodes[0]).name
+                    // date: dLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
+                    date: dateFormat(dLeg.departureDateTime),
+                    stops: dLeg.stopoversCount,
+                    overnight: dLeg.overnight,
+                    airline: airlines.find(airline => airline.code === dLeg.airlineCodes[0]).name,
+                    departureTime: dLeg.departureTime,
+                    arrivalTime: dLeg.arrivalTime,
                 }, 
-                arrival: {
-                date: aLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
-                stops: aLeg.stopoversCount,
-                overnight: aLeg.overnight,
-                airline: airlines.find(airline => airline.code === aLeg.airlineCodes[0]).name
-                }, 
+                return: {
+                    // date: aLeg.departureDateTime.match(/^\d{4}\-\d{2}\-\d{2}/),
+                    date: dateFormat(rLeg.departureDateTime),
+                    stops: rLeg.stopoversCount,
+                    overnight: rLeg.overnight,
+                    airline: airlines.find(airline => airline.code === rLeg.airlineCodes[0]).name,
+                    departureTime: rLeg.departureTime,
+                    arrivalTime: rLeg.arrivalTime,
+                },
                 price: fares.find(fare => fare.tripId === el.id).price.totalAmount
             });
             // console.log("🚀 ~ file: test.js ~ line 15 ~ nonstop ~ newTrip", newTrip);
