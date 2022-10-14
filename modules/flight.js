@@ -8,6 +8,7 @@ const { Schema } = mongoose;
 const flightSchema = new Schema({
   user: { type: String, required: true },
   nickname: { type: String, required: false },
+  notes: { type: String, required: false },
   origin: { type: String, required: true },
   destination: { type: String, required: true },
   price: { type: Number, required: true },
